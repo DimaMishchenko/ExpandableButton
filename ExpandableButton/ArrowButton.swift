@@ -24,30 +24,30 @@
 
 import UIKit
 
-class ArrowButton: ActionButton {
+public class ArrowButton: ActionButton {
     
     private typealias TopBottomPaths = (top: CGPath, bottom: CGPath)
     
     // MARK: - Public properties
     
-    var animationDuration: TimeInterval = 0.2
-    var arrowInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+    public var animationDuration: TimeInterval = 0.2
+    public var arrowInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
     
-    var arrowWidth: CGFloat = 1 {
+    public var arrowWidth: CGFloat = 1 {
         didSet {
             topLineLayer.lineWidth = arrowWidth
             bottomLineLayer.lineWidth = arrowWidth
         }
     }
     
-    var arrowColor: UIColor = .black {
+    public var arrowColor: UIColor = .black {
         didSet {
             topLineLayer.strokeColor = arrowColor.cgColor
             bottomLineLayer.strokeColor = arrowColor.cgColor
         }
     }
     
-    var isArrowsHidden = false  {
+    public var isArrowsHidden = false  {
         didSet {
             topLineLayer.isHidden = isArrowsHidden
             bottomLineLayer.isHidden = isArrowsHidden
@@ -61,8 +61,8 @@ class ArrowButton: ActionButton {
     
     // MARK: - Public
   
-    func showLeftArrow()    { animateArrow(with: leftArrowPaths()) }
-    func showRightArrow()   { animateArrow(with: rightArrowPaths()) }
+    public func showLeftArrow()    { animateArrow(with: leftArrowPaths()) }
+    public func showRightArrow()   { animateArrow(with: rightArrowPaths()) }
   
     // MARK: - Private
     

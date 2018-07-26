@@ -30,20 +30,27 @@ public class ExpandableButtonItem {
     
     // MARK: - Properties
     
-    // normal
-    public var title: String = ""
-    public var attributedTitle: NSAttributedString?
+    // image
     public var image: UIImage?
-    
-    // highlighted
-    public var highlightedTitle: String = ""
-    public var highlightedAttributedTitle: NSAttributedString?
     public var highlightedImage: UIImage?
+    
+    // title
+    public var attributedTitle: NSAttributedString?
+    public var highlightedAttributedTitle: NSAttributedString?
     
     // insets
     public var contentEdgeInsets: UIEdgeInsets = .zero
     public var titleEdgeInsets: UIEdgeInsets = .zero
     public var imageEdgeInsets: UIEdgeInsets = .zero
+    
+    // width
+    public var width: CGFloat?
+    
+    // alignment
+    public var titleAlignment: NSTextAlignment = .center
+    
+    // content mode
+    public var imageContentMode: UIViewContentMode = .scaleAspectFit
     
     // action
     public var action: ActionBlock = {_ in}
@@ -53,27 +60,29 @@ public class ExpandableButtonItem {
     
     // MARK: - Init
     
-    public init(title: String = "",
-                attributedTitle: NSAttributedString? = nil,
-                image: UIImage? = nil,
-                highlightedTitle: String = "",
-                highlightedAttributedTitle: NSAttributedString? = nil,
+    public init(image: UIImage? = nil,
                 highlightedImage: UIImage? = nil,
+                attributedTitle: NSAttributedString? = nil,
+                highlightedAttributedTitle: NSAttributedString? = nil,
                 contentEdgeInsets: UIEdgeInsets = .zero,
                 titleEdgeInsets: UIEdgeInsets = .zero,
                 imageEdgeInsets: UIEdgeInsets = .zero,
+                width: CGFloat? = nil,
+                titleAlignment: NSTextAlignment = .center,
+                imageContentMode: UIViewContentMode = .scaleAspectFit,
                 identifier: String = "",
                 action: @escaping ActionBlock = {_ in}) {
         
-        self.title = title
-        self.attributedTitle = attributedTitle
         self.image = image
-        self.highlightedTitle = highlightedTitle
-        self.highlightedAttributedTitle = highlightedAttributedTitle
         self.highlightedImage = highlightedImage
+        self.attributedTitle = attributedTitle
+        self.highlightedAttributedTitle = highlightedAttributedTitle
         self.contentEdgeInsets = contentEdgeInsets
         self.titleEdgeInsets = titleEdgeInsets
         self.imageEdgeInsets = imageEdgeInsets
+        self.width = width
+        self.titleAlignment = titleAlignment
+        self.imageContentMode = imageContentMode
         self.identifier = identifier
         self.action = action
     }

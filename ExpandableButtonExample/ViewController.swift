@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         view.backgroundColor = .black
         
         let insets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        
+
         let items = [
             ExpandableButtonItem(
                 image: #imageLiteral(resourceName: "delete"),
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
                 action: { _ in}
             )
         ]
-        
+
         buttonView = ExpandableButtonView(items: items)
         buttonView.backgroundColor = .white
         buttonView.arrowWidth = 2
@@ -63,7 +63,6 @@ class ViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (_) in
             self.setupFrame()
-            self.buttonView.openImage = #imageLiteral(resourceName: "like")
         }, completion: nil)
     }
 

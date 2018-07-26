@@ -126,7 +126,7 @@ public class ExpandableButtonView: UIView {
             super.frame = CGRect(
                 x: self.frame.origin.x,
                 y: self.frame.origin.y,
-                width: self.frame.size.width + self.arrowButton.frame.size.width * CGFloat(self.itemsButtons.count),
+                width: self.frame.size.width + self.itemsButtons.reduce(0, { $0 + $1.frame.width }),
                 height: self.frame.size.height
             )
         }) {
@@ -148,7 +148,7 @@ public class ExpandableButtonView: UIView {
             super.frame = CGRect(
                 x: self.frame.origin.x,
                 y: self.frame.origin.y,
-                width: self.frame.size.width - self.arrowButton.frame.size.width * CGFloat(self.itemsButtons.count),
+                width: self.frame.size.width - self.itemsButtons.reduce(0, { $0 + $1.frame.width }),
                 height: self.frame.size.height
             )
         }) {
@@ -195,9 +195,6 @@ public class ExpandableButtonView: UIView {
             let button = ActionButton()
             addSubview(button)
             
-            button.setTitle(item.title, for: .normal)
-            button.setTitle(item.highlightedTitle, for: .highlighted)
-            
             button.setImage(item.image, for: .normal)
             button.setImage(item.highlightedImage, for: .highlighted)
             
@@ -207,6 +204,11 @@ public class ExpandableButtonView: UIView {
             button.contentEdgeInsets = item.contentEdgeInsets
             button.titleEdgeInsets = item.titleEdgeInsets
             button.imageEdgeInsets = item.imageEdgeInsets
+            
+            button.titleLabel?.textAlignment = item.titleAlignment
+            button.imageView?.contentMode = item.imageContentMode
+            
+            if let width = item.width { button.frame = CGRect(x: 0, y: 0, width: width, height: 0) }
             
             button.actionBlock = { [weak self] in
                 item.action(item)
@@ -244,7 +246,7 @@ public class ExpandableButtonView: UIView {
             $0.frame = CGRect(
                 x: x,
                 y: 0,
-                width: arrowButton.frame.width,
+                width: $0.frame.width == 0 ? arrowButton.frame.width : $0.frame.width,
                 height: arrowButton.frame.height
             )
             
@@ -260,7 +262,7 @@ public class ExpandableButtonView: UIView {
             super.frame = CGRect(
                 x: frame.origin.x,
                 y: frame.origin.y,
-                width: frame.width + frame.width * CGFloat(itemsButtons.count),
+                width: frame.width + itemsButtons.reduce(0, { $0 + $1.frame.width }),
                 height: frame.height
             )
             showLeftArrow()
