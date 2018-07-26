@@ -2,7 +2,7 @@
 [![Swift 4.1](https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)](LICENSE)
 
-![](button.gif)
+![](Contents/main.gif)
 
 ## Requirements
 - iOS 9.0+
@@ -11,13 +11,13 @@
 ### [CocoaPods](http://www.cocoapods.org):
 - Add the following line to your [`Podfile`](http://guides.cocoapods.org/using/the-podfile.html):
 ``` ruby
-pod ''
+pod 'ExpandableButton'
 ```
 - Add `use_frameworks!` to your [`Podfile`](http://guides.cocoapods.org/using/the-podfile.html).
 - Run `pod install`.
 - Add to files:
 ``` swift
-import 
+import ExpandableButton  
 ```
 
 ## Usage
@@ -51,7 +51,7 @@ buttonView.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
 buttonView.backgroundColor = .white
 view.addSubview(buttonView)
 ```
-[![Image from Gyazo](https://i.gyazo.com/b032ec076475bdc30a1454e6e840084f.gif)](https://gyazo.com/b032ec076475bdc30a1454e6e840084f)
+![](Contents/example1.gif)
 
 With `image`, `highlightedImage`, `imageEdgeInsets`:
 ``` swift
@@ -70,7 +70,7 @@ let items = [
     ...
 ]
 ```
-[![Image from Gyazo](https://i.gyazo.com/e2dc4b0eb69636f1816b3caabc71b63a.gif)](https://gyazo.com/e2dc4b0eb69636f1816b3caabc71b63a)
+![](Contents/example2.gif)
 
 `arrowWidth`, `separatorWidth` and `cornerRadius`:
 ``` swift
@@ -78,7 +78,7 @@ buttonView.arrowWidth = 2
 buttonView.separatorWidth = 2
 buttonView.layer.cornerRadius = 30
 ```
-[![Image from Gyazo](https://i.gyazo.com/09283ee08763550e0ed2a4167dc71614.gif)](https://gyazo.com/09283ee08763550e0ed2a4167dc71614)
+![](Contents/example3.gif)
 
 Custom icons for `open` and `close` actions, `closeOpenImagesInsets`: 
 ``` swift
@@ -87,7 +87,7 @@ buttonView.openImage = UIImage(named: "open")
 buttonView.closeImage = UIImage(named: "close")
 buttonView.closeOpenImagesInsets = insets
 ```
-[![Image from Gyazo](https://i.gyazo.com/37c2f79fe0b55f884a6436270ca4125d.gif)](https://gyazo.com/37c2f79fe0b55f884a6436270ca4125d)
+![](Contents/example4.gif)
 
 With `attributedTitle`, `highlightedAttributedTitle` and custom item `width`:
 ``` swift
@@ -106,7 +106,7 @@ let items = [
     )
 ]
 ```
-[![Image from Gyazo](https://i.gyazo.com/2fb02285aba755b147997cd4645f8063.gif)](https://gyazo.com/2fb02285aba755b147997cd4645f8063)
+![](Contents/example5.gif)
 
 With `attributedTitle` under `image` (using `contentEdgeInsets`, `titleEdgeInsets`, `imageEdgeInsets`, `titleAlignment`, `imageContentMode`):
 ``` swift 
@@ -136,7 +136,7 @@ let items = [
     )
 ]
 ```
-[![Image from Gyazo](https://i.gyazo.com/209a3f10d0efc2351b3b81d06c4f6a5d.gif)](https://gyazo.com/209a3f10d0efc2351b3b81d06c4f6a5d)
+![](Contents/example6.gif)
 
 You can also `open()` and `close()`:
 ``` swift
@@ -181,6 +181,7 @@ buttonView.close()
 | `imageContentMode`           | `UIViewContentMode`              | `.scaleAspectFit` | `imageContentMode` for `imageView` in `UIButton`.|
 | `action`                     | `(ExpandableButtonItem) -> Void` | `{_ in}`          | Action closure. Calls on `.touchUpInside`        |
 | `identifier`                 | `String`                         | `""`              | Identifier for `ExpandableButtonItem`.           |
+
 
 You can also use [`ArrowButton`](ExpandableButton/ArrowButton.swift) (button which can drow left and right arrow using core graphics, just call `showLeftArrow()` or `showRightArrow()`) and [`ActionButton`](ExpandableButton/ActionButton.swift) (simple `UIButton` but with `actionBlock` propertie which calls on `.touchUpInside`) in your projects.
 
