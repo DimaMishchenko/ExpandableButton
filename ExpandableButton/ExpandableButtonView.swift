@@ -26,6 +26,13 @@ import UIKit
 
 public class ExpandableButtonView: UIView {
     
+    public enum Direction {
+        case up
+        case down
+        case left
+        case right
+    }
+    
     public enum State {
         case opened
         case closed
@@ -39,6 +46,8 @@ public class ExpandableButtonView: UIView {
     private var itemsButtons: [ActionButton] = []
     
     // MARK: - Public properties
+    
+    public private(set) var direction: Direction
     
     public private(set) var state: State = .closed
     
@@ -77,8 +86,7 @@ public class ExpandableButtonView: UIView {
     
     public var isSeparatorHidden: Bool = false      { didSet { separatorView.isHidden = isSeparatorHidden } }
     public var separatorColor: UIColor = .black     { didSet { separatorView.backgroundColor = separatorColor } }
-    public var separatorTopOffset: CGFloat = 8      { didSet { reloadSeparatorFrame() } }
-    public var separatorBottomOffset: CGFloat = 8   { didSet { reloadSeparatorFrame() } }
+    public var separatorInset: CGFloat = 8          { didSet { reloadSeparatorFrame() } }
     public var separatorWidth: CGFloat = 1          { didSet { reloadSeparatorFrame() } }
     
     // MARK: - Private properties
@@ -87,8 +95,9 @@ public class ExpandableButtonView: UIView {
     
     // MARK: - Init
     
-    public init(frame: CGRect = .zero, items: [ExpandableButtonItem]) {
+    public init(frame: CGRect = .zero, direction: Direction = .right, items: [ExpandableButtonItem]) {
         
+        self.direction = direction
         super.init(frame: frame)
         setupUI()
         setupButtons(with: items)
@@ -107,7 +116,7 @@ public class ExpandableButtonView: UIView {
         if firstLayout {
             
             setupFrames()
-            showRightArrow()
+            showCloseArrow()
             
             firstLayout = false
         }
@@ -120,15 +129,13 @@ public class ExpandableButtonView: UIView {
         guard state == .closed else { return }
     
         state = .animating
-        showLeftArrow()
+        showOpenArrow()
+        
+        itemsButtons.forEach { $0.isHidden = false }
         
         UIView.animate(withDuration: animationDuration, animations: {
-            super.frame = CGRect(
-                x: self.frame.origin.x,
-                y: self.frame.origin.y,
-                width: self.frame.size.width + self.itemsButtons.reduce(0, { $0 + $1.frame.width }),
-                height: self.frame.size.height
-            )
+            self.itemsButtons.forEach { $0.alpha = 0; $0.alpha = 1 }
+            self.open(with: self.direction)
         }) {
             if $0 {
                 self.state = .opened
@@ -138,21 +145,25 @@ public class ExpandableButtonView: UIView {
     }
     
     public func close() {
-        
+
         guard state == .opened else { return }
         
         state = .animating
-        showRightArrow()
+        
+        // because of CABasicAnimation in ArrowButton.
+        if direction == .up || direction == .left { self.close(with: self.direction) }
+        
+        showCloseArrow()
+        
+        // because of CABasicAnimation in ArrowButton.
+        if direction == .up || direction == .left { self.open(with: self.direction) }
         
         UIView.animate(withDuration: animationDuration, animations: {
-            super.frame = CGRect(
-                x: self.frame.origin.x,
-                y: self.frame.origin.y,
-                width: self.frame.size.width - self.itemsButtons.reduce(0, { $0 + $1.frame.width }),
-                height: self.frame.size.height
-            )
+            self.itemsButtons.forEach { $0.alpha = 1; $0.alpha = 0 }
+            self.close(with: self.direction)
         }) {
             if $0 {
+                self.itemsButtons.forEach { $0.isHidden = true }
                 self.state = .closed
                 self.impactHapticFeedback()
             }
@@ -208,7 +219,7 @@ public class ExpandableButtonView: UIView {
             button.titleLabel?.textAlignment = item.titleAlignment
             button.imageView?.contentMode = item.imageContentMode
             
-            if let width = item.width { button.frame = CGRect(x: 0, y: 0, width: width, height: 0) }
+            if let size = item.size { button.frame = CGRect(origin: .zero, size: size) }
             
             button.actionBlock = { [weak self] in
                 item.action(item)
@@ -235,65 +246,112 @@ public class ExpandableButtonView: UIView {
         
         // items buttons
         
-        var previousButton: UIButton?
-        
-        itemsButtons.forEach {
-            
-            let x = previousButton != nil ?
-                    previousButton!.frame.origin.x + previousButton!.frame.width :
-                    arrowButton.frame.origin.x + arrowButton.frame.width
-            
-            $0.frame = CGRect(
-                x: x,
-                y: 0,
-                width: $0.frame.width == 0 ? arrowButton.frame.width : $0.frame.width,
-                height: arrowButton.frame.height
-            )
-            
-            previousButton = $0
-        }
+        setupItemButtonsFrames()
+        itemsButtons.forEach { $0.isHidden = true }
         
         // self
         
         switch state {
         case .closed:
-            showRightArrow()
+            showCloseArrow()
         case .opened:
-            super.frame = CGRect(
-                x: frame.origin.x,
-                y: frame.origin.y,
-                width: frame.width + itemsButtons.reduce(0, { $0 + $1.frame.width }),
-                height: frame.height
-            )
-            showLeftArrow()
+            open(with: direction)
+            showOpenArrow()
         default: break
         }
     }
     
     private func reloadSeparatorFrame() {
         
-        separatorView.frame = CGRect(
-            x: frame.width,
-            y: separatorTopOffset,
-            width: separatorWidth,
-            height: frame.height - separatorTopOffset - separatorBottomOffset
-        )
+        switch direction {
+        case .up:
+            let y = itemsButtons.reduce(0, { $0 + $1.frame.height })
+            let width = frame.width - separatorInset * 2
+            separatorView.frame = CGRect(x: separatorInset, y: y, width: width, height: separatorWidth)
+        case .down:
+            let width = frame.width - separatorInset * 2
+            separatorView.frame = CGRect(x: separatorInset, y: frame.height, width: width, height: separatorWidth)
+        case .left:
+            let x = itemsButtons.reduce(0, { $0 + $1.frame.width })
+            let height = frame.height - separatorInset * 2
+            separatorView.frame = CGRect(x: x, y: separatorInset, width: separatorWidth, height: height)
+        case .right:
+            let height = frame.height - separatorInset * 2
+            separatorView.frame = CGRect(x: frame.width, y: separatorInset, width: separatorWidth, height: height)
+        }
+    }
+    
+    private func setupItemButtonsFrames() {
+        
+        var previousButton: UIButton?
+        
+        itemsButtons.forEach {
+            
+            let width = $0.frame.width == 0 ? arrowButton.frame.width : $0.frame.width
+            let height = $0.frame.height == 0 ? arrowButton.frame.height : $0.frame.height
+            
+            var x: CGFloat = 0
+            var y: CGFloat = 0
+            
+            switch direction {
+            case .up:
+                y = previousButton != nil ?
+                    previousButton!.frame.origin.y + previousButton!.frame.height :
+                    arrowButton.frame.origin.y
+            case .down:
+                y = previousButton != nil ?
+                    previousButton!.frame.origin.y + previousButton!.frame.height :
+                    arrowButton.frame.origin.y + arrowButton.frame.height
+            case .left:
+                x = previousButton != nil ?
+                    previousButton!.frame.origin.x + previousButton!.frame.width :
+                    arrowButton.frame.origin.x
+            case .right:
+                x = previousButton != nil ?
+                    previousButton!.frame.origin.x + previousButton!.frame.width :
+                    arrowButton.frame.origin.x + arrowButton.frame.width
+            }
+            $0.frame = CGRect(x: x, y: y, width: width, height: height)
+            
+            previousButton = $0
+        }
     }
     
     // MARK: - Arrows
     
-    private func showLeftArrow() {
+    private func showOpenArrow() {
         
         arrowButton.setImage(openImage, for: .normal)
         arrowButton.isArrowsHidden = openImage != nil
-        if openImage == nil { arrowButton.showLeftArrow() }
+        
+        if openImage == nil {
+            
+            if closeImage == nil {
+                
+                switch direction {
+                case .up:       arrowButton.showDownArrow()
+                case .down:     arrowButton.showUpArrow()
+                case .left:     arrowButton.showRightArrow()
+                case .right:    arrowButton.showLeftArrow()
+                }
+            }
+        }
     }
     
-    private func showRightArrow() {
+    private func showCloseArrow() {
         
         arrowButton.setImage(closeImage, for: .normal)
         arrowButton.isArrowsHidden = closeImage != nil
-        if closeImage == nil { arrowButton.showRightArrow() }
+        
+        if closeImage == nil {
+            
+            switch direction {
+            case .up:       arrowButton.showUpArrow()
+            case .down:     arrowButton.showDownArrow()
+            case .left:     arrowButton.showLeftArrow()
+            case .right:    arrowButton.showRightArrow()
+            }
+        }
     }
     
     // MARK: - Haptic Feedback
@@ -306,5 +364,61 @@ public class ExpandableButtonView: UIView {
             generator.selectionChanged()
         }
     }
-   
+    
+    // MARK: - Open close
+    
+    private func open(with direction: Direction) {
+        
+        switch direction {
+        case .up:
+            let itemsHeight = itemsButtons.reduce(0, { $0 + $1.frame.height })
+            let y = frame.origin.y - itemsHeight
+            let height = frame.size.height + itemsHeight
+            
+            super.frame = CGRect(x: frame.origin.x, y: y, width: frame.size.width, height: height)
+            
+            let arrY = super.frame.height - arrowButton.frame.height
+            arrowButton.frame = CGRect(x: 0, y: arrY, width: arrowButton.frame.width, height: arrowButton.frame.height)
+        case .down:
+            let height = frame.size.height + itemsButtons.reduce(0, { $0 + $1.frame.height })
+            super.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: height)
+        case .left:
+            let itemsWidth = itemsButtons.reduce(0, { $0 + $1.frame.width })
+            let x = frame.origin.x - itemsWidth
+            let width = frame.size.width + itemsWidth
+            super.frame = CGRect(x: x, y: frame.origin.y, width: width, height: frame.size.height)
+            
+            let arrX = super.frame.width - arrowButton.frame.width
+            arrowButton.frame = CGRect(x: arrX, y: 0, width: arrowButton.frame.width, height: arrowButton.frame.height)
+        case .right:
+            let width = frame.size.width + itemsButtons.reduce(0, { $0 + $1.frame.width })
+            super.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: width, height: frame.size.height)
+        }
+    }
+    
+    private func close(with direction: Direction) {
+        
+        switch direction {
+        case .up:
+            let itemsHeight = itemsButtons.reduce(0, { $0 + $1.frame.height })
+            let y = frame.origin.y + itemsHeight
+            let height = frame.size.height - itemsHeight
+            super.frame = CGRect(x: frame.origin.x, y: y, width: frame.size.width, height: height)
+            
+            arrowButton.frame = CGRect(x: 0, y: 0, width: arrowButton.frame.width, height: arrowButton.frame.height)
+        case .down:
+            let height = frame.size.height - itemsButtons.reduce(0, { $0 + $1.frame.height })
+            super.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width, height: height)
+        case .left:
+            let itemsWidth = itemsButtons.reduce(0, { $0 + $1.frame.width })
+            let x = frame.origin.x + itemsWidth
+            let width = frame.size.width - itemsWidth
+            super.frame = CGRect(x: x, y: frame.origin.y, width: width, height: frame.size.height)
+            
+            arrowButton.frame = CGRect(x: 0, y: 0, width: arrowButton.frame.width, height: arrowButton.frame.height)
+        case .right:
+            let width = frame.size.width - itemsButtons.reduce(0, { $0 + $1.frame.width })
+            super.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: width, height: frame.size.height)
+        }
+    }
 }

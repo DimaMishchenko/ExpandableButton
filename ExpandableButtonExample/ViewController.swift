@@ -49,12 +49,11 @@ class ViewController: UIViewController {
             )
         ]
 
-        buttonView = ExpandableButtonView(items: items)
+        buttonView = ExpandableButtonView(direction: .right, items: items)
         buttonView.backgroundColor = .white
         buttonView.arrowWidth = 2
         buttonView.separatorWidth = 2
-        buttonView.separatorTopOffset = 12
-        buttonView.separatorBottomOffset = 12
+        buttonView.separatorInset = 12
         buttonView.layer.cornerRadius = 30
         view.addSubview(buttonView)
         setupFrame()

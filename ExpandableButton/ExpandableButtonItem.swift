@@ -44,7 +44,7 @@ public class ExpandableButtonItem {
     public var imageEdgeInsets: UIEdgeInsets = .zero
     
     // width
-    public var width: CGFloat?
+    public var size: CGSize?
     
     // alignment
     public var titleAlignment: NSTextAlignment = .center
@@ -67,7 +67,7 @@ public class ExpandableButtonItem {
                 contentEdgeInsets: UIEdgeInsets = .zero,
                 titleEdgeInsets: UIEdgeInsets = .zero,
                 imageEdgeInsets: UIEdgeInsets = .zero,
-                width: CGFloat? = nil,
+                size: CGSize? = nil,
                 titleAlignment: NSTextAlignment = .center,
                 imageContentMode: UIViewContentMode = .scaleAspectFit,
                 identifier: String = "",
@@ -80,7 +80,7 @@ public class ExpandableButtonItem {
         self.contentEdgeInsets = contentEdgeInsets
         self.titleEdgeInsets = titleEdgeInsets
         self.imageEdgeInsets = imageEdgeInsets
-        self.width = width
+        self.size = size
         self.titleAlignment = titleAlignment
         self.imageContentMode = imageContentMode
         self.identifier = identifier
