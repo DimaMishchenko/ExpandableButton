@@ -21,7 +21,20 @@ import ExpandableButton
 ```
 
 ## Usage
-With `image` and `action`:
+You can init **ExpandableButton** with `frame` (default is `.zero`), `direction` (default is `.right`) and items (each item will be button). `direction` is opening direction. `items` is `[ExpandableButtonItem]` whiches contain information about future buttons.
+Diretions example:
+``` swift
+let rightButton = ExpandableButtonView(frame: frame, direction: .right, items: items)
+let leftButton = ExpandableButtonView(frame: frame, direction: .left, items: items)
+let upButton = ExpandableButtonView(frame: frame, direction: .up, items: items)
+let downButton = ExpandableButtonView(frame: frame, direction: .down, items: items)
+```
+![](Contents/right.gif)
+![](Contents/left.gif)
+![](Contents/up.gif)
+![](Contents/down.gif)
+
+Items with `image` and `action`:
 ``` swift
 // create items with images and actions
 let items = [
@@ -61,7 +74,7 @@ let insets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
 let items = [
     ExpandableButtonItem(
         image: UIImage(named: "delete"),
-        highlightedImage: UIImage(named: "delete")!.alpha(0.5),
+        highlightedImage: UIImage(named: "highlightedDelete"),
         imageEdgeInsets: insets,
         action: {_ in
             print("delete")
@@ -89,9 +102,9 @@ buttonView.closeOpenImagesInsets = insets
 ```
 ![](Contents/example4.gif)
 
-With `attributedTitle`, `highlightedAttributedTitle` and custom item `width`:
+With `attributedTitle`, `highlightedAttributedTitle` and custom item `size`:
 ``` swift
-// with attributed string, highlighted attributed string, custom width.
+// with attributed string, highlighted attributed string, custom size.
 let items = [
     ExpandableButtonItem(
         attributedTitle: NSAttributedString(
@@ -102,13 +115,13 @@ let items = [
             string: "Attributed Text",
             attributes: [.foregroundColor: UIColor.green]
         ),
-        width: 160
+        size: CGSize(width: 160, height: 60)
     )
 ]
 ```
 ![](Contents/example5.gif)
 
-With `attributedTitle` under `image` (using `contentEdgeInsets`, `titleEdgeInsets`, `imageEdgeInsets`, `titleAlignment`, `imageContentMode`):
+With `attributedTitle` under `image` (using `contentEdgeInsets`, `titleEdgeInsets`, `imageEdgeInsets`, `titleAlignment`, `imageContentMode`, `size`):
 ``` swift 
 let attributedTitle =  NSAttributedString(
     string: "Share",
@@ -124,13 +137,14 @@ let highlightedAttributedTitle =  NSAttributedString(
 
 let items = [
     ExpandableButtonItem(
-        image: #imageLiteral(resourceName: "share"),
-        highlightedImage: #imageLiteral(resourceName: "share").alpha(0.5),
+        image: UIImage(named: "share"),
+        highlightedImage: UIImage(named: "haglightedShare"),
         attributedTitle: attributedTitle,
         highlightedAttributedTitle: highlightedAttributedTitle,
         contentEdgeInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6),
         titleEdgeInsets: UIEdgeInsets(top: 24, left: -200, bottom: 0, right: 0),
         imageEdgeInsets: UIEdgeInsets(top: 6, left: 0, bottom: 24, right: 0),
+        size: CGSize(width: 80, height: 60),
         titleAlignment: .center,
         imageContentMode: .scaleAspectFit
     )
@@ -150,11 +164,12 @@ buttonView.close()
 ### [`ExpandableButtonView`](ExpandableButton/ExpandableButtonView.swift)
 | Name                    | Type           | Default value                            | Description                                     |
 | :---                    | :---           | :---                                     | :---                                            |
+| `direction`             | `Direction`    | `.right`                                 | Opening direction. Could be `.left`, `.right`, `.up`, `.down`. Set only on `init(frame:direction:items:)`.
 | `state`                 | `State`        | `.closed`                                | Current state. Could be `.opened`, `.closed` or `.animating`. |
 | `animationDuration`     | `TimeInterval` | `0.2`                                    | Opening, closing and arrow animation duration.  | 
 | `closeOnAction`         | `Bool`         | `false`                                  | If `true` call `close()` after any item action. |
 | `isHapticFeedback`      | `Bool`         | `true`                                   | Turn on haptic feedback (Taptic engine)         |
-| `arrowInsets`           | `UIEdgeInsets` | `top: 8, left: 12, bottom: 8, right: 12` | Arrow insets.                                   |
+| `arrowInsets`           | `UIEdgeInsets` | `top: 12 left: 12 bottom: 12 right: 12`  | Arrow insets.                                   |
 | `arrowWidth`            | `CGFloat`      | `1`                                      | Arrow line width.                               |
 | `arrowColor`            | `UIColor`      | `UIColor.black`                          | Arrow color.                                    |
 | `closeOpenImagesInsets` | `UIEdgeInsets` | `.zero`                                  | Insets for custom close and open images.        |
@@ -162,8 +177,7 @@ buttonView.close()
 | `openImage`             | `UIImage?`     | `nil`                                    | Custom open image.                              |
 | `isSeparatorHidden`     | `Bool`         | `false`                                  | If `true` hide separator view.                  |
 | `separatorColor`        | `UIColor`      | `UIColor.black`                          | Separator color.                                |
-| `separatorTopOffset`    | `CGFloat`      | `8`                                      | Separator view top offset.                      |
-| `separatorBottomOffset` | `CGFloat`      | `8`                                      | Separator view bottom offset.                   |
+| `separatorInset`        | `CGFloat`      | `8`                                      | Separator inset from top, bottom for `.left`, `.right` directions and from left, right for `up`, `down`. |
 | `separatorWidth`        | `CGFloat`      | `1`                                      | Separator view width.                           |
 
 ### [`ExpandableButtonItem`](ExpandableButton/ExpandableButtonItem.swift)
@@ -176,14 +190,14 @@ buttonView.close()
 | `contentEdgeInsets`          | `UIEdgeInsets`                   | `.zero`           | `contentEdgeInsets` for `UIButton`               |
 | `titleEdgeInsets`            | `UIEdgeInsets`                   | `.zero`           | `titleEdgeInsets` for `UIButton`.                |
 | `imageEdgeInsets`            | `UIEdgeInsets`                   | `.zero`           | `imageEdgeInsets` for `UIButton`.                |
-| `width`                      | `CGFloat?`                       | `nil`             | `UIButton` width for current item. If `nil` will be equal to arrow button width. |
+| `size`                       | `CGSize?`                        | `nil`             | `UIButton` size for current item. If `nil` will be equal to arrow button size. |
 | `titleAlignment`             | `NSTextAlignment`                | `.center`         | `titleAlignment` for `titleLabel` in `UIButton`. |
 | `imageContentMode`           | `UIViewContentMode`              | `.scaleAspectFit` | `imageContentMode` for `imageView` in `UIButton`.|
 | `action`                     | `(ExpandableButtonItem) -> Void` | `{_ in}`          | Action closure. Calls on `.touchUpInside`        |
 | `identifier`                 | `String`                         | `""`              | Identifier for `ExpandableButtonItem`.           |
 
 
-You can also use [`ArrowButton`](ExpandableButton/ArrowButton.swift) (button which can drow left and right arrow using core graphics, just call `showLeftArrow()` or `showRightArrow()`) and [`ActionButton`](ExpandableButton/ActionButton.swift) (simple `UIButton` but with `actionBlock` propertie which calls on `.touchUpInside`) in your projects.
+You can also use [`ArrowButton`](ExpandableButton/ArrowButton.swift) (button which can drow left, right, up and down arrows using core graphics, just call `showLeftArrow()`, `showRightArrow()`, `showUpArrow()` or `showDownArrow()`) and [`ActionButton`](ExpandableButton/ActionButton.swift) (simple `UIButton` but with `actionBlock` propertie which calls on `.touchUpInside`) in your projects.
 
 ## License
 **ExpandableButton** is under MIT license. See the [LICENSE](LICENSE) file for more info.
