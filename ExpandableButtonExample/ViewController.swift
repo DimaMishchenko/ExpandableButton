@@ -55,6 +55,7 @@ class ViewController: UIViewController {
         buttonView.separatorWidth = 2
         buttonView.separatorInset = 12
         buttonView.layer.cornerRadius = 30
+        buttonView.accessibilityIdentifier = "expandableButton"
         view.addSubview(buttonView)
         setupFrame()
     }

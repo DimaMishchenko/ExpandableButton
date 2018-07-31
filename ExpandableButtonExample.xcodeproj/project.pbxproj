@@ -15,12 +15,20 @@
 		963F696821021DB6007C5ACA /* ExpandableButtonExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963F696721021DB6007C5ACA /* ExpandableButtonExampleTests.swift */; };
 		963F697421021E3D007C5ACA /* ExpandableButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963F697321021E3D007C5ACA /* ExpandableButtonView.swift */; };
 		963F6976210224CB007C5ACA /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963F6975210224CB007C5ACA /* ActionButton.swift */; };
+		965C34E121109E400081C003 /* ExpandableButtonExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965C34E021109E400081C003 /* ExpandableButtonExampleUITests.swift */; };
 		96BA3FFF21062BCC004F4EB0 /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BA3FFE21062BCC004F4EB0 /* ArrowButton.swift */; };
 		96FF4BC8210238EA00938FE3 /* ExpandableButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FF4BC7210238EA00938FE3 /* ExpandableButtonItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		963F696421021DB6007C5ACA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 963F694721021DA9007C5ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 963F694E21021DA9007C5ACA;
+			remoteInfo = ExpandableButtonExample;
+		};
+		965C34E321109E400081C003 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 963F694721021DA9007C5ACA /* Project object */;
 			proxyType = 1;
@@ -42,6 +50,9 @@
 		963F696921021DB6007C5ACA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		963F697321021E3D007C5ACA /* ExpandableButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonView.swift; sourceTree = "<group>"; };
 		963F6975210224CB007C5ACA /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		965C34DE21109E400081C003 /* ExpandableButtonExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExpandableButtonExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		965C34E021109E400081C003 /* ExpandableButtonExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonExampleUITests.swift; sourceTree = "<group>"; };
+		965C34E221109E400081C003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96BA3FFE21062BCC004F4EB0 /* ArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
 		96FF4BC7210238EA00938FE3 /* ExpandableButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableButtonItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +72,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		965C34DB21109E400081C003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -70,6 +88,7 @@
 				963F697221021E08007C5ACA /* ExpandableButton */,
 				963F695121021DA9007C5ACA /* ExpandableButtonExample */,
 				963F696621021DB6007C5ACA /* ExpandableButtonExampleTests */,
+				965C34DF21109E400081C003 /* ExpandableButtonExampleUITests */,
 				963F695021021DA9007C5ACA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +98,7 @@
 			children = (
 				963F694F21021DA9007C5ACA /* ExpandableButtonExample.app */,
 				963F696321021DB6007C5ACA /* ExpandableButtonExampleTests.xctest */,
+				965C34DE21109E400081C003 /* ExpandableButtonExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,6 +134,15 @@
 				963F6975210224CB007C5ACA /* ActionButton.swift */,
 			);
 			path = ExpandableButton;
+			sourceTree = "<group>";
+		};
+		965C34DF21109E400081C003 /* ExpandableButtonExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				965C34E021109E400081C003 /* ExpandableButtonExampleUITests.swift */,
+				965C34E221109E400081C003 /* Info.plist */,
+			);
+			path = ExpandableButtonExampleUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +183,24 @@
 			productReference = 963F696321021DB6007C5ACA /* ExpandableButtonExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		965C34DD21109E400081C003 /* ExpandableButtonExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 965C34E721109E400081C003 /* Build configuration list for PBXNativeTarget "ExpandableButtonExampleUITests" */;
+			buildPhases = (
+				965C34DA21109E400081C003 /* Sources */,
+				965C34DB21109E400081C003 /* Frameworks */,
+				965C34DC21109E400081C003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				965C34E421109E400081C003 /* PBXTargetDependency */,
+			);
+			name = ExpandableButtonExampleUITests;
+			productName = ExpandableButtonExampleUITests;
+			productReference = 965C34DE21109E400081C003 /* ExpandableButtonExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -168,6 +215,10 @@
 						CreatedOnToolsVersion = 9.4.1;
 					};
 					963F696221021DB6007C5ACA = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 963F694E21021DA9007C5ACA;
+					};
+					965C34DD21109E400081C003 = {
 						CreatedOnToolsVersion = 9.4.1;
 						TestTargetID = 963F694E21021DA9007C5ACA;
 					};
@@ -188,6 +239,7 @@
 			targets = (
 				963F694E21021DA9007C5ACA /* ExpandableButtonExample */,
 				963F696221021DB6007C5ACA /* ExpandableButtonExampleTests */,
+				965C34DD21109E400081C003 /* ExpandableButtonExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -204,6 +256,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		963F696121021DB6007C5ACA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		965C34DC21109E400081C003 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -234,6 +293,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		965C34DA21109E400081C003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				965C34E121109E400081C003 /* ExpandableButtonExampleUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -241,6 +308,11 @@
 			isa = PBXTargetDependency;
 			target = 963F694E21021DA9007C5ACA /* ExpandableButtonExample */;
 			targetProxy = 963F696421021DB6007C5ACA /* PBXContainerItemProxy */;
+		};
+		965C34E421109E400081C003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 963F694E21021DA9007C5ACA /* ExpandableButtonExample */;
+			targetProxy = 965C34E321109E400081C003 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -456,6 +528,46 @@
 			};
 			name = Release;
 		};
+		965C34E521109E400081C003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 77X75EH6F4;
+				INFOPLIST_FILE = ExpandableButtonExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dima.mishchenko.ExpandableButtonExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ExpandableButtonExample;
+			};
+			name = Debug;
+		};
+		965C34E621109E400081C003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 77X75EH6F4;
+				INFOPLIST_FILE = ExpandableButtonExampleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dima.mishchenko.ExpandableButtonExampleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ExpandableButtonExample;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -482,6 +594,15 @@
 			buildConfigurations = (
 				963F697021021DB6007C5ACA /* Debug */,
 				963F697121021DB6007C5ACA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		965C34E721109E400081C003 /* Build configuration list for PBXNativeTarget "ExpandableButtonExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				965C34E521109E400081C003 /* Debug */,
+				965C34E621109E400081C003 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
