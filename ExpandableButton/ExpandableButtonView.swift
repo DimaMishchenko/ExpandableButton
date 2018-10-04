@@ -108,6 +108,7 @@ public class ExpandableButtonView: UIView {
     // MARK: - Overrides
 
     public override var frame: CGRect { didSet { setupFrames() } }
+    public override var backgroundColor: UIColor? { didSet { arrowButton.backgroundColor = backgroundColor } }
     
     override public func layoutSubviews() {
         
@@ -190,13 +191,14 @@ public class ExpandableButtonView: UIView {
             case .animating: break
             }
         }
+        arrowButton.backgroundColor = backgroundColor
         addSubview(arrowButton)
         
         // separator
         
         separatorView = UIView()
         separatorView.backgroundColor = separatorColor
-        addSubview(separatorView)
+        insertSubview(separatorView, belowSubview: arrowButton)
     }
     
     private func setupButtons(with items: [ExpandableButtonItem]) {
@@ -204,7 +206,7 @@ public class ExpandableButtonView: UIView {
         items.forEach { item in
             
             let button = ActionButton()
-            addSubview(button)
+            insertSubview(button, belowSubview: arrowButton)
             
             button.setImage(item.image, for: .normal)
             button.setImage(item.highlightedImage, for: .highlighted)

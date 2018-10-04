@@ -213,8 +213,8 @@ public class ArrowButton: ActionButton {
         let layer = CAShapeLayer()
         layer.strokeColor = arrowColor.cgColor
         layer.lineWidth = arrowWidth
-        layer.lineJoin = kCALineJoinRound
-        layer.lineCap = kCALineCapRound
+        layer.lineJoin = CAShapeLayerLineJoin.round
+        layer.lineCap = CAShapeLayerLineCap.round
         self.layer.addSublayer(layer)
         return layer
     }

@@ -50,7 +50,7 @@ public class ExpandableButtonItem {
     public var titleAlignment: NSTextAlignment = .center
     
     // content mode
-    public var imageContentMode: UIViewContentMode = .scaleAspectFit
+    public var imageContentMode: UIView.ContentMode = .scaleAspectFit
     
     // action
     public var action: ActionBlock = {_ in}
@@ -69,7 +69,7 @@ public class ExpandableButtonItem {
                 imageEdgeInsets: UIEdgeInsets = .zero,
                 size: CGSize? = nil,
                 titleAlignment: NSTextAlignment = .center,
-                imageContentMode: UIViewContentMode = .scaleAspectFit,
+                imageContentMode: UIView.ContentMode = .scaleAspectFit,
                 identifier: String = "",
                 action: @escaping ActionBlock = {_ in}) {
         
