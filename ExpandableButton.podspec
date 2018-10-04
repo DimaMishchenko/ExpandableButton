@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ExpandableButton'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.summary          = 'ExpandableButton'
  
   s.description      = <<-DESC
@@ -14,5 +14,7 @@ Pod::Spec.new do |s|
  
   s.ios.deployment_target = '9.0'
   s.source_files = 'ExpandableButton/*'
+  s.exclude_files = "ExpandableButton/*.plist"
+  s.swift_version = '4.2'
  
 end
