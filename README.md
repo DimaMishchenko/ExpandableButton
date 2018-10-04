@@ -13,6 +13,9 @@
 - Add the following line to your [`Podfile`](http://guides.cocoapods.org/using/the-podfile.html):
 ``` ruby
 pod 'ExpandableButton'
+
+#for swift less than 4.2 use:
+pod 'ExpandableButton', '~> 1.0.0'
 ```
 - Add `use_frameworks!` to your [`Podfile`](http://guides.cocoapods.org/using/the-podfile.html).
 - Run `pod install`.
