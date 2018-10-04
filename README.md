@@ -1,5 +1,5 @@
 # ExpandableButton
-[![Swift 4.1](https://img.shields.io/badge/Swift-4.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/ExpandableButton.svg)](https://cocoapods.org/pods/ExpandableButton)
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)](LICENSE)
 
