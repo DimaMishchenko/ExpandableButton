@@ -24,6 +24,20 @@
 
 import UIKit
 
+public protocol ExpandableButtonDelegate: class {
+    func willOpen(expandableButtonView: ExpandableButtonView)
+    func didOpen(expandableButtonView: ExpandableButtonView)
+    func willClose(expandableButtonView: ExpandableButtonView)
+    func didClose(expandableButtonView: ExpandableButtonView)
+}
+
+public extension ExpandableButtonDelegate {
+    func willOpen(expandableButtonView: ExpandableButtonView) {}
+    func didOpen(expandableButtonView: ExpandableButtonView) {}
+    func willClose(expandableButtonView: ExpandableButtonView) {}
+    func didClose(expandableButtonView: ExpandableButtonView) {}
+}
+
 public class ExpandableButtonView: UIView {
     
     public enum Direction {
@@ -58,6 +72,9 @@ public class ExpandableButtonView: UIView {
     public var closeOnAction: Bool = false
     public var isHapticFeedback = true
     
+    // delegate
+    public var delegate: ExpandableButtonDelegate?
+    
     // arrow
     
     public var arrowInsets: UIEdgeInsets {
@@ -89,6 +106,7 @@ public class ExpandableButtonView: UIView {
     public var separatorInset: CGFloat = 8          { didSet { reloadSeparatorFrame() } }
     public var separatorWidth: CGFloat = 1          { didSet { reloadSeparatorFrame() } }
     
+    
     // MARK: - Private properties
     
     private var firstLayout = true
@@ -104,9 +122,9 @@ public class ExpandableButtonView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-
+    
     // MARK: - Overrides
-
+    
     public override var frame: CGRect { didSet { setupFrames() } }
     public override var backgroundColor: UIColor? { didSet { arrowButton.backgroundColor = backgroundColor } }
     
@@ -126,9 +144,9 @@ public class ExpandableButtonView: UIView {
     // MARK: - Public
     
     public func open() {
-        
         guard state == .closed else { return }
-    
+        self.delegate?.willOpen(expandableButtonView: self)
+        
         state = .animating
         showOpenArrow()
         
@@ -141,13 +159,14 @@ public class ExpandableButtonView: UIView {
             if $0 {
                 self.state = .opened
                 self.impactHapticFeedback()
+                self.delegate?.didOpen(expandableButtonView: self)
             }
         }
     }
     
     public func close() {
-
         guard state == .opened else { return }
+        self.delegate?.willClose(expandableButtonView: self)
         
         state = .animating
         
@@ -167,6 +186,7 @@ public class ExpandableButtonView: UIView {
                 self.itemsButtons.forEach { $0.isHidden = true }
                 self.state = .closed
                 self.impactHapticFeedback()
+                self.delegate?.didClose(expandableButtonView: self)
             }
         }
         
@@ -182,7 +202,7 @@ public class ExpandableButtonView: UIView {
         
         arrowButton = ArrowButton()
         arrowButton.actionBlock = { [weak self] in
-        
+            
             guard let state = self?.state else { return }
             
             switch state {
@@ -399,7 +419,6 @@ public class ExpandableButtonView: UIView {
     }
     
     private func close(with direction: Direction) {
-        
         switch direction {
         case .up:
             let itemsHeight = itemsButtons.reduce(0, { $0 + $1.frame.height })
