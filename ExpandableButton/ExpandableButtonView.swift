@@ -61,8 +61,6 @@ public class ExpandableButtonView: UIView {
     
     // MARK: - Public properties
     
-    public var delegate: ExpandableButtonDelegate?
-    
     public private(set) var direction: Direction
     
     public private(set) var state: State = .closed
@@ -73,6 +71,9 @@ public class ExpandableButtonView: UIView {
     
     public var closeOnAction: Bool = false
     public var isHapticFeedback = true
+    
+    // delegate
+    public var delegate: ExpandableButtonDelegate?
     
     // arrow
     
@@ -104,6 +105,7 @@ public class ExpandableButtonView: UIView {
     public var separatorColor: UIColor = .black     { didSet { separatorView.backgroundColor = separatorColor } }
     public var separatorInset: CGFloat = 8          { didSet { reloadSeparatorFrame() } }
     public var separatorWidth: CGFloat = 1          { didSet { reloadSeparatorFrame() } }
+    
     
     // MARK: - Private properties
     
